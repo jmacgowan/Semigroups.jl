@@ -73,6 +73,7 @@ namespace libsemigroups_julia {
   void define_kambites(jl::Module& mod);
   void define_congruence(jl::Module& mod);
   void define_to_cong(jl::Module& mod);
+  void define_to_presentation(jl::Module& mod);
 
 }  // namespace libsemigroups_julia
 

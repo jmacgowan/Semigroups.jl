@@ -58,6 +58,7 @@ namespace libsemigroups_julia {
     define_kambites(mod);
     define_congruence(mod);
     define_to_cong(mod);
+    define_to_presentation(mod);
   }
 
 }  // namespace libsemigroups_julia
