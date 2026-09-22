@@ -5,6 +5,7 @@ using Semigroups
     @testset "scaffolding" begin
         @test isdefined(Semigroups, :to)
         @test hasmethod(Semigroups.to, Tuple{Presentation})
+        @test hasmethod(Semigroups.to, Tuple{Congruence})
         @test hasmethod(Semigroups.to, Tuple{Kambites})
         @test hasmethod(Semigroups.to, Tuple{ToddCoxeter})
         @test hasmethod(Semigroups.to, Tuple{KnuthBendix})
@@ -25,6 +26,18 @@ using Semigroups
         @test alphabet(q) == alphabet(p)
         @test rules(q) == rules(p)
         @test contains_empty_word(q) == contains_empty_word(p)
+    end
+
+    @testset "Congruence conversion" begin
+        p = Presentation()
+        set_alphabet!(p, 2)
+        add_rule_no_checks!(p, [1, 1], [2])
+        c = Congruence(twosided, p)
+
+        q = Semigroups.to(c)
+
+        @test q isa Presentation
+        @test q == p
     end
 
     @testset "conversion with no rules" begin
@@ -138,4 +151,5 @@ using Semigroups
         @test number_of_rules(q) > 0
         throw_if_bad_alphabet_or_rules(q)
     end
+
 end

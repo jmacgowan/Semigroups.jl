@@ -1,0 +1,33 @@
+using Test
+using Semigroups
+
+@testset verbose = true "to ToddCoxeter" begin
+    @testset "scaffolding" begin
+        @test hasmethod(
+            Semigroups.to,
+            Tuple{Type{ToddCoxeter},congruence_kind,FroidurePin,Any},
+        )
+        @test hasmethod(Semigroups.to, Tuple{Type{ToddCoxeter},congruence_kind,KnuthBendix})
+    end
+
+    @testset "from FroidurePin" begin
+        fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
+        tc = Semigroups.to(ToddCoxeter, twosided, fp, right_cayley_graph(fp))
+
+        @test tc isa ToddCoxeter
+        @test alphabet(presentation(tc)) == [1, 2]
+    end
+
+    @testset "from KnuthBendix" begin
+        p = Presentation()
+        set_alphabet!(p, 1)
+        add_rule_no_checks!(p, [1, 1], [1])
+        kb = KnuthBendix(twosided, p)
+
+        tc = Semigroups.to(ToddCoxeter, twosided, kb)
+
+        @test tc isa ToddCoxeter
+        @test alphabet(presentation(tc)) == [1]
+        @test number_of_classes(tc) == 1
+    end
+end

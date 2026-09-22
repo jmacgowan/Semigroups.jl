@@ -10,6 +10,13 @@ Return a copy of the presentation `p`.
 to(p::Presentation) = Presentation(p)
 
 """
+    to(c::Congruence) -> Presentation
+
+Return the presentation underlying the congruence `c`.
+"""
+to(c::Congruence) = LibSemigroups.to_presentation_word(c)
+
+"""
     to(k::Kambites) -> Presentation
 
 Return a [`Presentation`](@ref Semigroups.Presentation) corresponding

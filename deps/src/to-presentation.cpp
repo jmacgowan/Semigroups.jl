@@ -1,5 +1,6 @@
 #include "libsemigroups_julia.hpp"
 
+#include <libsemigroups/cong-class.hpp>
 #include <libsemigroups/kambites-class.hpp>
 #include <libsemigroups/presentation.hpp>
 #include <libsemigroups/to-presentation.hpp>
@@ -9,6 +10,11 @@
 namespace libsemigroups_julia {
 
   void define_to_presentation(jl::Module& m) {
+    m.method("to_presentation_word",
+             [](libsemigroups::Congruence<libsemigroups::word_type>& c) {
+               return libsemigroups::to<
+                   libsemigroups::Presentation<libsemigroups::word_type>>(c);
+             });
     m.method("to_presentation_word",
              [](libsemigroups::Kambites<libsemigroups::word_type>& k) {
                return libsemigroups::to<
