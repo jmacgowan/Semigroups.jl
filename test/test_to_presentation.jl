@@ -4,10 +4,27 @@ using Semigroups
 @testset verbose = true "to Presentation" begin
     @testset "scaffolding" begin
         @test isdefined(Semigroups, :to)
+        @test hasmethod(Semigroups.to, Tuple{Presentation})
         @test hasmethod(Semigroups.to, Tuple{Kambites})
         @test hasmethod(Semigroups.to, Tuple{ToddCoxeter})
         @test hasmethod(Semigroups.to, Tuple{KnuthBendix})
         @test hasmethod(Semigroups.to, Tuple{FroidurePin})
+    end
+
+    @testset "Presentation conversion" begin
+        p = Presentation()
+        set_alphabet!(p, 2)
+        add_rule_no_checks!(p, [1, 1], [2])
+        set_contains_empty_word!(p, true)
+
+        q = Semigroups.to(p)
+
+        @test q isa Presentation
+        @test q == p
+        @test q !== p
+        @test alphabet(q) == alphabet(p)
+        @test rules(q) == rules(p)
+        @test contains_empty_word(q) == contains_empty_word(p)
     end
 
     @testset "conversion with no rules" begin

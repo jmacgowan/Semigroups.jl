@@ -3,6 +3,13 @@ to-presentation.jl - <Type> to Presentation conversion
 """
 
 """
+    to(p::Presentation) -> Presentation
+
+Return a copy of the presentation `p`.
+"""
+to(p::Presentation) = Presentation(p)
+
+"""
     to(k::Kambites) -> Presentation
 
 Return a [`Presentation`](@ref Semigroups.Presentation) corresponding
