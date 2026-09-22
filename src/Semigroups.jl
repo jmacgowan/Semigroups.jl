@@ -80,7 +80,6 @@ include("cong-common.jl")
 include("knuth-bendix.jl")
 include("todd-coxeter.jl")
 include("kambites.jl")
-include("to-presentation.jl")
 
 # High-level element types
 include("bmat8.jl")
@@ -88,6 +87,7 @@ include("transf.jl")
 
 # Algorithm types (must come after element types)
 include("froidure-pin.jl")
+include("to-presentation.jl")
 
 function _version_string(v::Union{Nothing,VersionNumber})
     return isnothing(v) ? "unknown" : string(v)

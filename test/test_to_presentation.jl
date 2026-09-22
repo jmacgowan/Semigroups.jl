@@ -5,6 +5,9 @@ using Semigroups
     @testset "scaffolding" begin
         @test isdefined(Semigroups, :to)
         @test hasmethod(Semigroups.to, Tuple{Kambites})
+        @test hasmethod(Semigroups.to, Tuple{ToddCoxeter})
+        @test hasmethod(Semigroups.to, Tuple{KnuthBendix})
+        @test hasmethod(Semigroups.to, Tuple{FroidurePin})
     end
 
     @testset "conversion with no rules" begin
@@ -58,5 +61,64 @@ using Semigroups
         @test q == presentation(k)
         @test alphabet(q) == alphabet(presentation(k))
         @test rules(q) == rules(presentation(k))
+    end
+
+    @testset "ToddCoxeter conversion" begin
+        p = Presentation()
+        set_alphabet!(p, 2)
+        add_rule_no_checks!(p, [1, 1], [2])
+        tc = ToddCoxeter(twosided, p)
+
+        q = Semigroups.to(tc)
+
+        @test q isa Presentation
+        @test q == presentation(tc)
+        @test alphabet(q) == alphabet(p)
+        @test rules(q) == rules(p)
+    end
+
+    @testset "ToddCoxeter conversion contains empty word" begin
+        p = Presentation()
+        set_alphabet!(p, 1)
+        set_contains_empty_word!(p, true)
+        tc = ToddCoxeter(twosided, p)
+
+        @test contains_empty_word(Semigroups.to(tc))
+    end
+
+    @testset "KnuthBendix conversion" begin
+        p = Presentation()
+        set_alphabet!(p, 2)
+        add_rule_no_checks!(p, [1, 1], [1])
+        kb = KnuthBendix(twosided, p)
+        run!(kb)
+
+        q = Semigroups.to(kb)
+
+        @test q isa Presentation
+        @test alphabet(q) == alphabet(presentation(kb))
+        @test rules(q) == active_rules(kb)
+        @test number_of_rules(q) == length(active_rules(kb))
+    end
+
+    @testset "KnuthBendix conversion contains empty word" begin
+        p = Presentation()
+        set_alphabet!(p, 1)
+        set_contains_empty_word!(p, true)
+        kb = KnuthBendix(twosided, p)
+
+        @test contains_empty_word(Semigroups.to(kb))
+    end
+
+    @testset "FroidurePin conversion" begin
+        fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
+        run!(fp)
+
+        q = Semigroups.to(fp)
+
+        @test q isa Presentation
+        @test alphabet(q) == [1, 2]
+        @test number_of_rules(q) > 0
+        throw_if_bad_alphabet_or_rules(q)
     end
 end

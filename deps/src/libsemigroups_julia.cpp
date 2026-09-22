@@ -49,9 +49,9 @@ namespace libsemigroups_julia {
     define_word_range(mod);
     define_word_graph(mod);
     define_paths(mod);
+    define_presentation(mod);
     define_froidure_pin_base(mod);
     define_froidure_pin(mod);
-    define_presentation(mod);
     define_presentation_examples(mod);
     define_knuth_bendix(mod);
     define_todd_coxeter(mod);

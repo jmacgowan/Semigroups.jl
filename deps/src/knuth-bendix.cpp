@@ -25,6 +25,7 @@
 #include <libsemigroups/knuth-bendix-class.hpp>
 #include <libsemigroups/knuth-bendix-helpers.hpp>
 #include <libsemigroups/presentation.hpp>
+#include <libsemigroups/to-presentation.hpp>
 #include <libsemigroups/word-graph.hpp>
 
 #include "cong-common.hpp"
@@ -102,6 +103,10 @@ namespace libsemigroups_julia {
                        jlcxx::julia_base_type<CongruenceCommon>());
     auto type = m.add_type<KB>("KnuthBendixRewriteTrie",
                                jlcxx::julia_base_type<KBImpl>());
+
+    type.method("to_presentation_word", [](KB& self) {
+      return libsemigroups::to<Presentation<word_type>>(self);
+    });
 
     ////////////////////////////////////////////////////////////////////////
     // Constructors
