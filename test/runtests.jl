@@ -31,4 +31,7 @@ using Semigroups
     include("test_to_todd_coxeter.jl")
     include("test_to_presentation.jl")
     include("test_to_knuth_bendix.jl")
+    include("test_to_congruence.jl")
+    include("test_to_inverse_presentation.jl")
+    include("test_to_froidure_pin.jl")
 end

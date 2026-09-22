@@ -60,6 +60,7 @@ namespace libsemigroups_julia {
     define_to_cong(mod);
     define_to_todd_coxeter(mod);
     define_to_knuth_bendix(mod);
+    define_to_froidure_pin(mod);
     define_to_presentation(mod);
   }
 

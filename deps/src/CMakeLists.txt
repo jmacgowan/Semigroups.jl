@@ -65,6 +65,7 @@ add_library(libsemigroups_julia SHARED
     to-cong.cpp
     to-todd-coxeter.cpp
     to-knuth-bendix.cpp
+    to-froidure-pin.cpp
     to-presentation.cpp
 )
 

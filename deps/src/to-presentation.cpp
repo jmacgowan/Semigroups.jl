@@ -10,6 +10,18 @@
 namespace libsemigroups_julia {
 
   void define_to_presentation(jl::Module& m) {
+    m.method(
+        "to_inverse_presentation_word",
+        [](libsemigroups::Presentation<libsemigroups::word_type> const& p) {
+          return libsemigroups::to<libsemigroups::InversePresentation>(p);
+        });
+    m.method(
+        "to_inverse_presentation_word",
+        [](libsemigroups::InversePresentation<libsemigroups::word_type> const&
+               ip) {
+          return libsemigroups::InversePresentation<libsemigroups::word_type>(
+              ip);
+        });
     m.method("to_presentation_word",
              [](libsemigroups::Congruence<libsemigroups::word_type>& c) {
                return libsemigroups::to<
