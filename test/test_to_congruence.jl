@@ -5,12 +5,9 @@ using Semigroups
     @testset "scaffolding" begin
         @test hasmethod(
             Semigroups.to,
-            Tuple{Type{Congruence}, congruence_kind, FroidurePin, Any},
+            Tuple{Type{Congruence},congruence_kind,FroidurePin,Any},
         )
-        @test hasmethod(
-            Semigroups.to,
-            Tuple{Type{Congruence}, congruence_kind, WordGraph},
-        )
+        @test hasmethod(Semigroups.to, Tuple{Type{Congruence},congruence_kind,WordGraph})
     end
 
     @testset "from FroidurePin" begin

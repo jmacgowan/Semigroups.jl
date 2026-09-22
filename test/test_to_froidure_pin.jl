@@ -3,7 +3,7 @@ using Semigroups
 
 @testset verbose = true "to FroidurePin" begin
     @testset "scaffolding" begin
-        @test hasmethod(Semigroups.to, Tuple{Type{FroidurePin}, WordGraph})
+        @test hasmethod(Semigroups.to, Tuple{Type{FroidurePin},WordGraph})
     end
 
     @testset "from WordGraph" begin

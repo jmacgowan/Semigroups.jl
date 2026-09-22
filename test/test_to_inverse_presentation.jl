@@ -3,10 +3,7 @@ using Semigroups
 
 @testset verbose = true "to InversePresentation" begin
     @testset "scaffolding" begin
-        @test hasmethod(
-            Semigroups.to,
-            Tuple{Type{InversePresentation}, Presentation},
-        )
+        @test hasmethod(Semigroups.to, Tuple{Type{InversePresentation},Presentation})
         @test hasmethod(Semigroups.to, Tuple{InversePresentation})
     end
 
