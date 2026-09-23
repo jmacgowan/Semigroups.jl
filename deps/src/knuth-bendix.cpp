@@ -104,11 +104,6 @@ namespace libsemigroups_julia {
     auto type = m.add_type<KB>("KnuthBendixRewriteTrie",
                                jlcxx::julia_base_type<KBImpl>());
 
-    // to_presentation_word, returns Presentation<word_type>
-    type.method("to_presentation_word", [](KB& self) {
-      return libsemigroups::to<Presentation<word_type>>(self);
-    });
-
     ////////////////////////////////////////////////////////////////////////
     // Constructors
     ////////////////////////////////////////////////////////////////////////
