@@ -22,6 +22,8 @@ algorithm.
 """
 const CongruenceCommon = LibSemigroups.CongruenceCommon
 
+const Congruence = LibSemigroups.CongruenceWord
+
 _words_to_cpp(words::AbstractVector{<:AbstractVector{<:Integer}}) =
     Any[_word_to_cpp(word) for word in words]
 
