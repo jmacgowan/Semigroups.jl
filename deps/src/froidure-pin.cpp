@@ -24,7 +24,6 @@
 
 #include <libsemigroups/bmat8.hpp>
 #include <libsemigroups/froidure-pin.hpp>
-#include <libsemigroups/to-presentation.hpp>
 #include <libsemigroups/transf.hpp>
 
 #include <jlcxx/array.hpp>
@@ -109,11 +108,6 @@ namespace libsemigroups_julia {
 
       auto type
           = m.add_type<FP>(name, jlcxx::julia_base_type<FroidurePinBase>());
-
-      // to_presentation_word, returns Presentation<word_type>
-      type.method("to_presentation_word", [](FP& self) {
-        return libsemigroups::to<libsemigroups::Presentation<word_type>>(self);
-      });
 
       ////////////////////////////////////////////////////////////////////
       // 1. Constructors — 1-4 generator arg lambdas

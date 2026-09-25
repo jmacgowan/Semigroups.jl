@@ -25,7 +25,6 @@
 #include <libsemigroups/knuth-bendix-class.hpp>
 #include <libsemigroups/knuth-bendix-helpers.hpp>
 #include <libsemigroups/presentation.hpp>
-#include <libsemigroups/to-presentation.hpp>
 #include <libsemigroups/word-graph.hpp>
 
 #include "cong-common.hpp"
@@ -80,8 +79,8 @@ namespace libsemigroups_julia {
 
     using CongruenceCommon = libsemigroups::detail::CongruenceCommon;
     using KBImpl           = libsemigroups::detail::KnuthBendixImpl<
-        libsemigroups::detail::RewriteTrie,
-        libsemigroups::ShortLexCompare>;
+                  libsemigroups::detail::RewriteTrie,
+                  libsemigroups::ShortLexCompare>;
     using KB = libsemigroups::KnuthBendix<word_type,
                                           libsemigroups::detail::RewriteTrie,
                                           libsemigroups::ShortLexCompare>;
