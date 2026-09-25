@@ -3,6 +3,7 @@ using Semigroups
 
 @testset verbose = true "to ToddCoxeter" begin
     @testset "scaffolding" begin
+        # Check conversions from Froidure-Pin and Knuth-Bendix.
         @test hasmethod(
             Semigroups.to,
             Tuple{Type{ToddCoxeter},congruence_kind,FroidurePin,Any},
@@ -11,6 +12,7 @@ using Semigroups
     end
 
     @testset "from FroidurePin" begin
+        # Convert a completed Froidure-Pin graph.
         fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
         tc = Semigroups.to(ToddCoxeter, twosided, fp, right_cayley_graph(fp))
 
@@ -19,6 +21,7 @@ using Semigroups
     end
 
     @testset "from KnuthBendix" begin
+        # Convert a Knuth-Bendix instance built from a presentation.
         p = Presentation()
         set_alphabet!(p, 1)
         add_rule_no_checks!(p, [1, 1], [1])

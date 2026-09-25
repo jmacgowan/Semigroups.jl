@@ -3,6 +3,7 @@ using Semigroups
 
 @testset verbose = true "to Presentation" begin
     @testset "scaffolding" begin
+        # Check every public conversion to Presentation.
         @test isdefined(Semigroups, :to)
         @test hasmethod(Semigroups.to, Tuple{Presentation})
         @test hasmethod(Semigroups.to, Tuple{Congruence})
@@ -13,6 +14,7 @@ using Semigroups
     end
 
     @testset "Presentation conversion" begin
+        # Copying preserves presentation data without aliasing the wrapper.
         p = Presentation()
         set_alphabet!(p, 2)
         add_rule_no_checks!(p, [1, 1], [2])
@@ -29,6 +31,7 @@ using Semigroups
     end
 
     @testset "Congruence conversion" begin
+        # A congruence converts back to its defining presentation.
         p = Presentation()
         set_alphabet!(p, 2)
         add_rule_no_checks!(p, [1, 1], [2])
@@ -41,6 +44,7 @@ using Semigroups
     end
 
     @testset "conversion with no rules" begin
+        # Conversion also preserves an alphabet when there are no rules.
         p = Presentation()
         set_alphabet!(p, 3)
         k = Kambites(twosided, p)
@@ -54,6 +58,7 @@ using Semigroups
     end
 
     @testset "conversion of alphabet + rules" begin
+        # Conversion preserves both alphabet and rules.
         p = Presentation()
         set_alphabet!(p, 3)
         add_rule_no_checks!(p, [1, 2, 1], [2, 3])
@@ -69,6 +74,7 @@ using Semigroups
     end
 
     @testset "contains empty word" begin
+        # The empty-word flag is retained by conversion.
         p = Presentation()
         set_alphabet!(p, 1)
         set_contains_empty_word!(p, true)
@@ -81,6 +87,7 @@ using Semigroups
     end
 
     @testset "matches Kambites presentation" begin
+        # The converted presentation matches Kambites exactly.
         p = Presentation()
         set_alphabet!(p, 2)
         add_rule_no_checks!(p, [1, 1], [2])
@@ -94,6 +101,7 @@ using Semigroups
     end
 
     @testset "ToddCoxeter conversion" begin
+        # Conversion preserves the Todd-Coxeter presentation data.
         p = Presentation()
         set_alphabet!(p, 2)
         add_rule_no_checks!(p, [1, 1], [2])
@@ -108,6 +116,7 @@ using Semigroups
     end
 
     @testset "ToddCoxeter conversion contains empty word" begin
+        # Check the empty-word flag for Todd-Coxeter conversion.
         p = Presentation()
         set_alphabet!(p, 1)
         set_contains_empty_word!(p, true)
@@ -117,6 +126,7 @@ using Semigroups
     end
 
     @testset "KnuthBendix conversion" begin
+        # Conversion exposes the active Knuth-Bendix rules.
         p = Presentation()
         set_alphabet!(p, 2)
         add_rule_no_checks!(p, [1, 1], [1])
@@ -132,6 +142,7 @@ using Semigroups
     end
 
     @testset "KnuthBendix conversion contains empty word" begin
+        # Check the empty-word flag for Knuth-Bendix conversion.
         p = Presentation()
         set_alphabet!(p, 1)
         set_contains_empty_word!(p, true)
@@ -141,6 +152,7 @@ using Semigroups
     end
 
     @testset "FroidurePin conversion" begin
+        # Conversion produces a valid presentation from Froidure-Pin.
         fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
         run!(fp)
 
