@@ -19,6 +19,9 @@ using Semigroups
 
         @test c isa Congruence
         @test c isa CongruenceCommon
+        @test number_of_classes(c) == 6
+        @test kind(c) == twosided
+        @test alphabet(presentation(c)) == [1, 2]
     end
 
     @testset "from WordGraph" begin
@@ -31,5 +34,18 @@ using Semigroups
 
         @test c isa Congruence
         @test c isa CongruenceCommon
+        @test number_of_classes(c) == 1
+        @test kind(c) == twosided
+        @test alphabet(presentation(c)) == [1]
+    end
+
+    @testset "errors are translated" begin
+        fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
+        @test_throws LibsemigroupsError Semigroups.to(
+            Congruence,
+            twosided,
+            fp,
+            WordGraph(2, 1),
+        )
     end
 end

@@ -29,9 +29,9 @@
 namespace libsemigroups_julia {
 
   void define_to_froidure_pin(jl::Module& m) {
-    using FP = libsemigroups::FroidurePin<libsemigroups::Transf<0, uint8_t>>;
+    using FP = libsemigroups::FroidurePin<libsemigroups::Transf<0, uint32_t>>;
 
-    // Complete WordGraph to FroidurePin<Transf<0, uint8_t>>.
+    // Complete WordGraph to FroidurePin<Transf<0, uint32_t>>. The wider
     m.method("to_froidure_pin_from_wg",
              [](libsemigroups::WordGraph<uint32_t> const& wg) {
                return libsemigroups::to<FP>(wg);
