@@ -21,11 +21,7 @@ The result represents the trivial congruence over the semigroup defined by
     the left or right Cayley graph of `fp`.
 """
 to(::Type{Congruence}, kind::congruence_kind, fp::FroidurePin, wg) =
-    @wrap_libsemigroups_call LibSemigroups.to_congruence_from_fpb(
-        kind,
-        fp.cxx_obj,
-        wg,
-    )
+    @wrap_libsemigroups_call LibSemigroups.to_congruence_from_fpb(kind, fp.cxx_obj, wg)
 
 """
     to(::Type{Congruence}, kind::congruence_kind, wg::WordGraph) -> Congruence

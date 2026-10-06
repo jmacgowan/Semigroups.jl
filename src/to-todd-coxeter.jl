@@ -20,11 +20,7 @@ The result represents the trivial congruence over the semigroup defined by
     the left or right Cayley graph of `fp`.
 """
 to(::Type{ToddCoxeter}, kind::congruence_kind, fp::FroidurePin, wg) =
-    @wrap_libsemigroups_call LibSemigroups.to_todd_coxeter_from_fpb(
-        kind,
-        fp.cxx_obj,
-        wg,
-    )
+    @wrap_libsemigroups_call LibSemigroups.to_todd_coxeter_from_fpb(kind, fp.cxx_obj, wg)
 
 """
     to(::Type{ToddCoxeter}, kind::congruence_kind, kb::KnuthBendix) -> ToddCoxeter

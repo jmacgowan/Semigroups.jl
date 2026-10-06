@@ -31,7 +31,7 @@ Return the number of classes of `cong`, triggering a full enumeration if
 needed.
 """
 number_of_classes(cong::CongruenceCommon) =
-  @wrap_libsemigroups_call LibSemigroups.number_of_classes(cong)
+    @wrap_libsemigroups_call LibSemigroups.number_of_classes(cong)
 
 """
   presentation(cong::CongruenceCommon) -> Presentation
