@@ -13,7 +13,7 @@ rules as `p`, with inverse data initialised for the inverse-presentation
 representation.
 """
 to(::Type{InversePresentation}, p::Presentation) =
-    LibSemigroups.to_inverse_presentation_word(p)
+    @wrap_libsemigroups_call LibSemigroups.to_inverse_presentation_word(p)
 
 """
     to(ip::InversePresentation) -> InversePresentation
