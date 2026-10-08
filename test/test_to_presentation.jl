@@ -5,12 +5,24 @@ using Semigroups
     @testset "scaffolding" begin
         # Check every public conversion to Presentation.
         @test isdefined(Semigroups, :to)
-        @test hasmethod(Semigroups.to, Tuple{Presentation})
-        @test hasmethod(Semigroups.to, Tuple{Congruence})
-        @test hasmethod(Semigroups.to, Tuple{Kambites})
-        @test hasmethod(Semigroups.to, Tuple{ToddCoxeter})
-        @test hasmethod(Semigroups.to, Tuple{KnuthBendix})
-        @test hasmethod(Semigroups.to, Tuple{FroidurePin})
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, Presentation}
+        )
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, Congruence}
+        )
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, Kambites}
+        )
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, ToddCoxeter}
+        )
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, KnuthBendix}
+        )
+        @test hasmethod(
+            Semigroups.to, Tuple{Type{Presentation}, FroidurePin}
+        )
     end
 
     @testset "Presentation conversion" begin
@@ -20,7 +32,7 @@ using Semigroups
         add_rule_no_checks!(p, [1, 1], [2])
         set_contains_empty_word!(p, true)
 
-        q = Semigroups.to(p)
+        q = Semigroups.to(Presentation, p)
 
         @test q isa Presentation
         @test q == p
@@ -37,7 +49,7 @@ using Semigroups
         add_rule_no_checks!(p, [1, 1], [2])
         c = Congruence(twosided, p)
 
-        q = Semigroups.to(c)
+        q = Semigroups.to(Presentation, c)
 
         @test q isa Presentation
         @test q == p
@@ -49,7 +61,7 @@ using Semigroups
         set_alphabet!(p, 3)
         k = Kambites(twosided, p)
 
-        q = Semigroups.to(k)
+        q = Semigroups.to(Presentation, k)
 
         @test q isa Presentation
         @test q == presentation(k)
@@ -65,7 +77,7 @@ using Semigroups
         add_rule_no_checks!(p, [3, 3], [1])
         k = Kambites(twosided, p)
 
-        q = Semigroups.to(k)
+        q = Semigroups.to(Presentation, k)
 
         @test q == presentation(k)
         @test q == p
@@ -80,7 +92,7 @@ using Semigroups
         set_contains_empty_word!(p, true)
         k = Kambites(twosided, p)
 
-        q = Semigroups.to(k)
+        q = Semigroups.to(Presentation, k)
 
         @test q == presentation(k)
         @test contains_empty_word(q)
@@ -93,7 +105,7 @@ using Semigroups
         add_rule_no_checks!(p, [1, 1], [2])
         k = Kambites(twosided, p)
 
-        q = Semigroups.to(k)
+        q = Semigroups.to(Presentation, k)
 
         @test q == presentation(k)
         @test alphabet(q) == alphabet(presentation(k))
@@ -107,7 +119,7 @@ using Semigroups
         add_rule_no_checks!(p, [1, 1], [2])
         tc = ToddCoxeter(twosided, p)
 
-        q = Semigroups.to(tc)
+        q = Semigroups.to(Presentation, tc)
 
         @test q isa Presentation
         @test q == presentation(tc)
@@ -122,7 +134,7 @@ using Semigroups
         set_contains_empty_word!(p, true)
         tc = ToddCoxeter(twosided, p)
 
-        @test contains_empty_word(Semigroups.to(tc))
+        @test contains_empty_word(Semigroups.to(Presentation, tc))
     end
 
     @testset "KnuthBendix conversion" begin
@@ -133,7 +145,7 @@ using Semigroups
         kb = KnuthBendix(twosided, p)
         run!(kb)
 
-        q = Semigroups.to(kb)
+        q = Semigroups.to(Presentation, kb)
 
         @test q isa Presentation
         @test alphabet(q) == alphabet(presentation(kb))
@@ -148,20 +160,21 @@ using Semigroups
         set_contains_empty_word!(p, true)
         kb = KnuthBendix(twosided, p)
 
-        @test contains_empty_word(Semigroups.to(kb))
+        @test contains_empty_word(Semigroups.to(Presentation, kb))
     end
 
     @testset "FroidurePin conversion" begin
         # Conversion produces a valid presentation from Froidure-Pin.
         fp = FroidurePin(Transf([2, 1, 3]), Transf([2, 3, 1]))
-        run!(fp)
 
-        q = Semigroups.to(fp)
+        @test !finished(fp)
 
+        q = Semigroups.to(Presentation, fp)
+
+        @test finished(fp)
         @test q isa Presentation
         @test alphabet(q) == [1, 2]
         @test number_of_rules(q) > 0
         throw_if_bad_alphabet_or_rules(q)
     end
-
 end

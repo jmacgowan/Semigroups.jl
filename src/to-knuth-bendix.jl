@@ -10,9 +10,7 @@ conversion. It constructs a Knuth-Bendix instance from the presentation
 obtained from `fp` and represents the trivial congruence over that semigroup.
 `kind` selects whether the resulting congruence is one-sided or two-sided.
 
-The conversion does not enumerate `fp` before obtaining its presentation.
-Run `fp` first if the presentation must describe the fully enumerated
-semigroup.
+This conversion enumerates `fp` before obtaining its presentation.
 """
 to(::Type{KnuthBendix}, kind::congruence_kind, fp::FroidurePin) =
     LibSemigroups.to_knuth_bendix_from_fpb(kind, fp.cxx_obj)

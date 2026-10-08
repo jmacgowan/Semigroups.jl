@@ -4,8 +4,14 @@ using Semigroups
 @testset verbose = true "to InversePresentation" begin
     @testset "scaffolding" begin
         # Check conversion from Presentation and copying an inverse presentation.
-        @test hasmethod(Semigroups.to, Tuple{Type{InversePresentation},Presentation})
-        @test hasmethod(Semigroups.to, Tuple{InversePresentation})
+        @test hasmethod(
+            Semigroups.to,
+            Tuple{Type{InversePresentation}, Presentation},
+        )
+        @test hasmethod(
+            Semigroups.to,
+            Tuple{Type{InversePresentation}, InversePresentation},
+        )
     end
 
     @testset "from Presentation" begin
@@ -30,7 +36,7 @@ using Semigroups
         ip = InversePresentation(p)
         set_inverses!(ip, [1])
 
-        copy = Semigroups.to(ip)
+        copy = Semigroups.to(InversePresentation, ip)
 
         @test copy isa InversePresentation
         @test copy !== ip

@@ -16,10 +16,11 @@ to(::Type{InversePresentation}, p::Presentation) =
     LibSemigroups.to_inverse_presentation_word(p)
 
 """
-    to(ip::InversePresentation) -> InversePresentation
+    to(::Type{InversePresentation}, ip::InversePresentation) -> InversePresentation
 
 Convert an InversePresentation to an InversePresentation.
 
 Return a copy of `ip`.
 """
-to(ip::InversePresentation) = InversePresentation(ip)
+to(::Type{InversePresentation}, ip::InversePresentation) =
+    InversePresentation(ip)
