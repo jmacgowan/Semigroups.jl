@@ -5,24 +5,12 @@ using Semigroups
     @testset "scaffolding" begin
         # Check every public conversion to Presentation.
         @test isdefined(Semigroups, :to)
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, Presentation}
-        )
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, Congruence}
-        )
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, Kambites}
-        )
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, ToddCoxeter}
-        )
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, KnuthBendix}
-        )
-        @test hasmethod(
-            Semigroups.to, Tuple{Type{Presentation}, FroidurePin}
-        )
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},Presentation})
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},Congruence})
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},Kambites})
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},ToddCoxeter})
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},KnuthBendix})
+        @test hasmethod(Semigroups.to, Tuple{Type{Presentation},FroidurePin})
     end
 
     @testset "Presentation conversion" begin
