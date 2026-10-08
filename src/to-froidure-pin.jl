@@ -18,7 +18,7 @@ The graph must be complete, and every target must be a node of the graph.
 - [`LibsemigroupsError`](@ref Semigroups.LibsemigroupsError) if the graph is
     incomplete or contains an out-of-range target.
 """
-to(::Type{FroidurePin}, wg::WordGraph) =
+@cxxdereference to(::Type{FroidurePin}, wg::WordGraph) =
     FroidurePin{Transf{UInt32}}(@wrap_libsemigroups_call begin
         LibSemigroups.to_froidure_pin_from_wg(wg)
     end)

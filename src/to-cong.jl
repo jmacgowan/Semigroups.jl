@@ -36,5 +36,5 @@ conversion. The result represents the trivial congruence over `wg`.
 The graph is added to the constructed congruence as-is; no checks are made
 that the resulting Todd-Coxeter or Congruence object is valid.
 """
-to(::Type{Congruence}, kind::congruence_kind, wg::WordGraph) =
+@cxxdereference to(::Type{Congruence}, kind::congruence_kind, wg::WordGraph) =
     @wrap_libsemigroups_call LibSemigroups.to_congruence_from_wg(kind, wg)
