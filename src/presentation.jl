@@ -131,8 +131,8 @@ of rules (given as `(lhs, rhs)` tuples or `lhs => rhs` pairs), inferring the alp
 from the letters present in the rules.
 """
 function Presentation(
-    rules::AbstractVector{<:Union{Tuple{W,W}, Pair{W,W}}},
-) where {W<:Union{Vector{Int}, String}}
+    rules::AbstractVector{<:Union{Tuple{W,W},Pair{W,W}}},
+) where {W<:Union{Vector{Int},String}}
     p = Presentation{W}()
     for (lhs, rhs) in rules
         add_rule_no_checks!(p, lhs, rhs)
@@ -147,7 +147,7 @@ end
 Construct an empty [`Presentation{W}`](@ref Semigroups.Presentation) with an initial
 alphabet defined by `alphabet`.
 """
-function Presentation(alphabet::Union{Vector{Int}, String, Vector{String}, Vector{Char}})
+function Presentation(alphabet::Union{Vector{Int},String,Vector{String},Vector{Char}})
     if alphabet isa Vector{String}
         p = Presentation{String}()
         set_alphabet!(p, join(alphabet))
