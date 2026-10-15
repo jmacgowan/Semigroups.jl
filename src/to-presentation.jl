@@ -20,7 +20,8 @@ This conversion returns the presentation used to construct or initialise `c`.
 Congruence-generating pairs are not added to the returned presentation by
 running `c`.
 """
-to(::Type{Presentation}, c::Congruence) = LibSemigroups.to_presentation_word(c)
+to(::Type{Presentation}, c::Congruence) =
+    _wrap_presentation(LibSemigroups.to_presentation_word(c))
 
 """
     to(::Type{Presentation}, k::Kambites) -> Presentation
@@ -31,7 +32,8 @@ initialise `k`.
 
 This conversion does not enumerate `k`.
 """
-to(::Type{Presentation}, k::Kambites) = LibSemigroups.to_presentation_word(k)
+to(::Type{Presentation}, k::Kambites) =
+    _wrap_presentation(LibSemigroups.to_presentation_word(k))
 
 """
     to(::Type{Presentation}, tc::ToddCoxeter) -> Presentation
@@ -41,7 +43,8 @@ Return the presentation used to construct or initialise `tc`.
 
 This conversion does not enumerate `tc`.
 """
-to(::Type{Presentation}, tc::ToddCoxeter) = LibSemigroups.to_presentation_word(tc)
+to(::Type{Presentation}, tc::ToddCoxeter) =
+    _wrap_presentation(LibSemigroups.to_presentation_word(tc))
 
 """
     to(::Type{Presentation}, kb::KnuthBendix) -> Presentation
@@ -53,7 +56,8 @@ This conversion does not enumerate `kb`, so the returned presentation may not
 yet describe the completed semigroup or monoid. Run `kb` first if a fully
 processed presentation is required.
 """
-to(::Type{Presentation}, kb::KnuthBendix) = LibSemigroups.to_presentation_word(kb)
+to(::Type{Presentation}, kb::KnuthBendix) =
+    _wrap_presentation(LibSemigroups.to_presentation_word(kb))
 
 """
     to(::Type{Presentation}, fp::FroidurePin) -> Presentation
@@ -63,4 +67,5 @@ Return a presentation using the currently known rules of `fp`.
 
 This conversion enumerates `fp` before obtaining its presentation.
 """
-to(::Type{Presentation}, fp::FroidurePin) = LibSemigroups.to_presentation_word(fp.cxx_obj)
+to(::Type{Presentation}, fp::FroidurePin) =
+    _wrap_presentation(LibSemigroups.to_presentation_word(fp.cxx_obj))

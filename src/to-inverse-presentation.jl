@@ -13,7 +13,7 @@ those of `p`, over a normalised alphabet with a corresponding inverse
 letter for each letter of `p`.
 """
 to(::Type{InversePresentation}, p::Presentation) =
-    @wrap_libsemigroups_call LibSemigroups.to_inverse_presentation_word(p)
+    @wrap_libsemigroups_call LibSemigroups.to_inverse_presentation_word(_cxx_word(p))
 
 """
     to(::Type{InversePresentation}, ip::InversePresentation) -> InversePresentation

@@ -7,6 +7,24 @@ using Semigroups
         @test hasmethod(Presentation, Tuple{})
     end
 
+    @testset "parametric types and string support" begin
+        # Default constructor resolves to Vector{Int}
+        p_default = Presentation()
+        @test p_default isa Presentation{Vector{Int}}
+
+        p_vec = Presentation([([1, 2], [2, 1])])
+
+        p_str = Presentation([("a", "b")])
+        # String constructor inference
+        p_str_inferred = Presentation(["a", "b"])
+        @test p_str_inferred isa Presentation{String}
+
+        if isdefined(Semigroups, :_cxx_word)
+            @test_throws ArgumentError Semigroups._cxx_word(p_str)
+            @test Semigroups._cxx_word(p_default) === p_default.cxx_obj
+        end
+    end
+
     @testset "constructors + init! + deepcopy + alphabet getter" begin
         p = Presentation()
         @test p isa Presentation
@@ -247,7 +265,7 @@ using Semigroups
         set_alphabet!(p, [1, 2])
         ip = InversePresentation(p)
         @test ip isa InversePresentation
-        @test ip isa Presentation                   # CxxWrap inheritance chain
+        @test ip isa Semigroups.LibSemigroups.PresentationWord   # CxxWrap inheritance chain
         @test alphabet(ip) == [1, 2]
 
         # Copy ctor
@@ -475,7 +493,7 @@ using Semigroups
         @test rules(p) == [([1, 1], [1]), ([2, 2], [2])]
 
         # Binding-surface: rules_vector is a callable C++ method on Presentation.
-        flat = Semigroups.LibSemigroups.rules_vector(p)
+        flat = Semigroups.LibSemigroups.rules_vector(p.cxx_obj)
         @test length(flat) == 2 * number_of_rules(p)
     end
 
@@ -519,10 +537,10 @@ using Semigroups
     @testset "binding surface" begin
         LS = Semigroups.LibSemigroups
         # Scalar / reference signatures - hasmethod with concrete types works.
-        @test hasmethod(LS.first_unused_letter, Tuple{Presentation})
-        @test hasmethod(LS.longest_rule_index, Tuple{Presentation})
-        @test hasmethod(LS.shortest_rule_index, Tuple{Presentation})
-        @test hasmethod(LS.rules_vector, Tuple{Presentation})
+        @test hasmethod(LS.first_unused_letter, Tuple{LS.PresentationWord})
+        @test hasmethod(LS.longest_rule_index, Tuple{LS.PresentationWord})
+        @test hasmethod(LS.shortest_rule_index, Tuple{LS.PresentationWord})
+        @test hasmethod(LS.rules_vector, Tuple{LS.PresentationWord})
 
         # Vector-input methods: CxxWrap's ArrayRef<size_t> maps to a concrete
         # Julia method signature that is tricky to spell as a `Tuple{...}`, so
