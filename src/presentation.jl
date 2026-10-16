@@ -69,6 +69,7 @@ _presentation_word_to_cpp(::Type{Vector{Int}}, w::AbstractVector{<:Integer}) =
     _word_to_cpp(w)
 _presentation_word_to_cpp(::Type{String}, w::AbstractString) = String(w)
 _presentation_word_to_cpp(::Type{String}, w::AbstractVector{<:AbstractString}) = join(w)
+_presentation_word_to_cpp(::Type{String}, w::AbstractVector{Char}) = String(w)
 
 _presentation_word_from_cpp(::Type{Vector{Int}}, w) = _word_from_cpp(w)
 _presentation_word_from_cpp(::Type{String}, w) = String(w)
@@ -101,7 +102,7 @@ function _cxx_word(p::Presentation{W}) where {W}
     W === Vector{Int} || throw(
         ArgumentError(
             "this algorithm is only available for Presentation{Vector{Int}}; " *
-            "got Presentation{$W}. Use `to_presentation_word(p)` first.",
+            "got Presentation{$W}.",
         ),
     )
     return p.cxx_obj
@@ -158,37 +159,6 @@ function Presentation(alphabet::Union{Vector{Int},String,Vector{String},Vector{C
     set_alphabet!(p, alphabet)
     return p
 end
-
-# ============================================================================
-# Conversions
-# ============================================================================
-
-"""
-    to_presentation_string(p::Presentation{Vector{Int}}) -> Presentation{String}
-
-Convert a word-backed presentation into a string-backed presentation.
-"""
-function to_presentation_string(p::Presentation{Vector{Int}})
-    return _wrap_presentation(
-        @wrap_libsemigroups_call LibSemigroups.to_presentation_string(p.cxx_obj)
-    )
-end
-
-"""
-    to_presentation_word(p::Presentation{String}) -> Presentation{Vector{Int}}
-
-Convert a string-backed presentation into a word-backed presentation.
-"""
-function to_presentation_word(p::Presentation{String})
-    return _wrap_presentation(
-        @wrap_libsemigroups_call LibSemigroups.to_presentation_word(p.cxx_obj)
-    )
-end
-
-Base.convert(::Type{Presentation{String}}, p::Presentation{Vector{Int}}) =
-    to_presentation_string(p)
-Base.convert(::Type{Presentation{Vector{Int}}}, p::Presentation{String}) =
-    to_presentation_word(p)
 
 # ============================================================================
 # Core presentation methods
