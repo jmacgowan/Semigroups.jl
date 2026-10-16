@@ -89,10 +89,8 @@ const _CxxRefs{T} =
 
 # Always copy via the C++ copy constructor: presentation(kb) and friends
 # return a reference into kb, which must not be aliased by a Julia object.
-_wrap_presentation(x::_CxxRefs{PresentationWord}) =
-    Presentation{Vector{Int}}(PresentationWord(x))
-_wrap_presentation(x::_CxxRefs{PresentationString}) =
-    Presentation{String}(PresentationString(x))
+_wrap_presentation(x::PresentationWord) = Presentation{Vector{Int}}(x)
+_wrap_presentation(x::PresentationString) = Presentation{String}(x)
 _wrap_presentation(x::Presentation) = x
 
 _cxx(p::Presentation) = p.cxx_obj
