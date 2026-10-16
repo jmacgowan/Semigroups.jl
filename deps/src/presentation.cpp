@@ -103,7 +103,7 @@ namespace libsemigroups_julia {
 
       type.method("init!", [](P& self) { self.init(); });
       type.method("alphabet",
-                  [](P const& self) -> Word const& { return self.alphabet(); });
+                  [](P const& self) -> Word { return self.alphabet(); });
       type.method("set_alphabet_size!",
                   [](P& self, size_t n) { self.alphabet(n); });
       type.method("alphabet_from_rules!",
@@ -133,10 +133,10 @@ namespace libsemigroups_julia {
       type.method("number_of_rules", [](P const& self) -> size_t {
         return self.rules.size() / 2;
       });
-      type.method("rule_lhs", [](P const& self, size_t i) -> Word const& {
+      type.method("rule_lhs", [](P const& self, size_t i) -> Word {
         return self.rules.at(2 * i);
       });
-      type.method("rule_rhs", [](P const& self, size_t i) -> Word const& {
+      type.method("rule_rhs", [](P const& self, size_t i) -> Word {
         return self.rules.at(2 * i + 1);
       });
       type.method("clear_rules!", [](P& self) { self.rules.clear(); });

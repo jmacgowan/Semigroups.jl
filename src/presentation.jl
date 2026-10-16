@@ -75,8 +75,8 @@ _presentation_word_from_cpp(::Type{Vector{Int}}, w) = _word_from_cpp(w)
 _presentation_word_from_cpp(::Type{String}, w) = String(w)
 
 _presentation_letter_to_cpp(::Type{Vector{Int}}, x::Integer) = _letter_to_cpp(x)
-_presentation_letter_to_cpp(::Type{String}, x::Char) = x
-
+# In src/presentation.jl:
+_presentation_letter_to_cpp(::Type{String}, x::Char) = UInt(x)
 _presentation_letter_from_cpp(::Type{Vector{Int}}, x) = _letter_from_cpp(x)
 _presentation_letter_from_cpp(::Type{String}, x) = Char(x)
 

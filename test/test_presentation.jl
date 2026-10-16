@@ -40,6 +40,51 @@ using Semigroups
         @test r !== p                           # distinct wrapper
     end
 
+@testset "Alphabet Invariants & Custom Alphabets" begin
+    p_char = Presentation(['a', 'b', 'c'])
+    @test p_char isa Presentation{String}
+    @test alphabet(p_char) == "abc"
+    @test letter(p_char, 1) == 'a'
+    @test index_of(p_char, 'b') == 2
+    @test in_alphabet(p_char, 'c')
+    @test !in_alphabet(p_char, 'z')
+
+    p_dup = Presentation()
+    @test_throws LibsemigroupsError set_alphabet!(p_dup, [1, 1, 2])
+end
+    @testset "Rule Searching and Index Invariants" begin
+        p = Presentation()
+        set_alphabet!(p, [1, 2])
+        add_rule!(p, [1, 2], [2, 1])
+
+        # Verified present rule
+        @test is_rule(p, [1, 2], [2, 1])
+        @test index_rule(p, [1, 2], [2, 1]) == 1
+
+        # Verified absent rule returns UNDEFINED sentinel
+        @test !is_rule(p, [1], [2])
+        @test index_rule(p, [1], [2]) == Semigroups.UNDEFINED
+        @test !contains_rule(p, [1], [2])
+    end
+
+@testset "Rule Validation Guards" begin
+    p = Presentation()
+    set_alphabet!(p, [1, 2])
+
+    @test_throws LibsemigroupsError throw_if_letter_not_in_alphabet(p, 3)
+
+    add_rule_no_checks!(p, [1, 3], [2])
+    @test_throws LibsemigroupsError throw_if_bad_rules(p)
+    @test_throws LibsemigroupsError throw_if_bad_alphabet_or_rules(p)
+end
+
+@testset "Algorithm Type Guard Constraints" begin
+    p_str = Presentation{String}()
+    set_alphabet!(p_str, "ab")
+
+    # Assert type guard raises ArgumentError explaining type incompatibility
+    @test_throws ArgumentError Semigroups._cxx_word(p_str)
+end
     @testset "alphabet setters" begin
         p = Presentation()
         set_alphabet!(p, 3)
